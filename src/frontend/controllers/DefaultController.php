@@ -2,12 +2,13 @@
 
 namespace luya\account\frontend\controllers;
 
+use luya\admin\base\RestController;
 use Yii;
 use luya\account\models\LoginForm;
 use luya\helpers\Url;
 use luya\account\frontend\base\Controller;
 
-class DefaultController extends Controller
+class DefaultController extends \luya\admin\ngrest\base\Controller
 {
     public function getRules()
     {

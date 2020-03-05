@@ -23,7 +23,7 @@ class LoginForm extends \yii\base\Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->verifyPassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password');
+                $this->addError($attribute, \Yii::t('accountadmin', 'Incorrect username or password'));
             }
         }
     }

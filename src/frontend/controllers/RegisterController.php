@@ -2,6 +2,8 @@
 
 namespace luya\account\frontend\controllers;
 
+use luya\account\models\User;
+use luya\admin\models\Config;
 use Yii;
 use Exception;
 use luya\helpers\Url;
@@ -14,22 +16,30 @@ class RegisterController extends Controller
         return [
             [
                 'allow' => true,
-                'actions' => ['index', 'activate'],
+                'actions' => ['activate'],
                 'roles' => ['?'],
             ],
         ];
     }
 
-    /**
-     * @todo implementation
-     * @param unknown $hash
-     */
     public function actionActivate($hash)
     {
-        // activation process
+		$model = User::findIdentityByVerificationHash($hash);
+	    $redirect = Config::get('app_url');
+
+		if($model){
+			$model->is_mail_verified = 1;
+			$model->is_active = 1;
+			$model->verification_hash = null;
+			$model->update(false);
+
+			return $this->redirect($redirect . "/register/activated?email=".$model->email);
+		}
+
+	    return $this->redirect($redirect . "/auth");
     }
     
-    public function actionIndex()
+    /*public function actionIndex()
     {
         $model = Yii::createObject(['class' => $this->module->registerFormClass]);
         
@@ -80,5 +90,5 @@ class RegisterController extends Controller
             'model' => $model,
             'state' => $state,
         ]);
-    }
+    }*/
 }

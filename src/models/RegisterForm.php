@@ -2,6 +2,6 @@
 
 namespace luya\account\models;
 
-class RegisterForm extends \account\base\RegisterForm
+class RegisterForm extends \luya\account\frontend\base\RegisterForm
 {
 }
